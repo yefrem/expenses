@@ -31,6 +31,14 @@ class AccountsController < ApplicationController
     head :no_content
   end
 
+  def report
+    @account = @user.accounts.find(params[:account_id])
+    date_from = DateTime.parse(params.require(:date_from))
+    date_to = DateTime.parse(params.require(:date_to))
+    @report = Report.new(account: @account, date_from: date_from, date_to: date_to)
+    render json: @report
+  end
+
   private
 
     def set_user

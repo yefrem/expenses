@@ -1,5 +1,6 @@
 class Report
   include ActiveModel::Model
+  include ActiveModel::Serialization
   attr_accessor :account, :date_from, :date_to
 
   def total_received
@@ -35,7 +36,7 @@ class Report
           @total_received += t.amount
         end
       end
-      @average_spending_per_day = (@total_spent / (date_to - date_from + 1)).round(2)
+      @average_spending_per_day = @total_spent == 0 ? 0 : (@total_spent / (date_to - date_from + 1)).round(2)
 
       @calculated = true
     end
