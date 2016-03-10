@@ -1,5 +1,5 @@
 class Transaction < ActiveRecord::Base
-  validates :comment, :amount, :sender, :time, presence: true
+  validates :comment, :amount, :time, presence: true
 
   # has two account field for transactions between accounts
   # for one account transaction only sender is used
