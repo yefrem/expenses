@@ -36,4 +36,13 @@ RSpec.describe Transaction, type: :model do
     t.receiver = create(:peter_bank)
     expect {t.save}.to raise_exception(ArgumentError)
   end
+
+  it "should set current time if nothing passed" do
+    date = DateTime.new(2016, 03, 15)
+    Timecop.freeze(date) do
+      t = build(:transaction)
+      t.save
+      expect(t.time).to eq(date)
+    end
+  end
 end

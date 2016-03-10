@@ -1,12 +1,12 @@
 class Transaction < ActiveRecord::Base
-  validates :comment, :amount, :sender, presence: true
+  validates :comment, :amount, :sender, :time, presence: true
 
   # has two account field for transactions between accounts
   # for one account transaction only sender is used
   belongs_to :sender, :class_name => Account
   belongs_to :receiver, :class_name => Account
 
-  before_save :format_amount
+  before_validation :format_fields
 
   # todo: should we also override save! method?
   def save
@@ -26,8 +26,11 @@ class Transaction < ActiveRecord::Base
   end
 
   private
-  def format_amount
+  def format_fields
     self.amount = self.amount.round(2)
+    if self.time.nil?
+      self.time = DateTime.now
+    end
   end
 
 end
