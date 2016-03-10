@@ -7,7 +7,7 @@ RSpec.describe UsersController, type: :controller do
   end
 
   it "should render users" do
-    get :index, type: :json
+    get :index
     expect_json_sizes 2
     expect_json('0', name: 'Peter')
     expect_json_types('0.accounts', :array)
