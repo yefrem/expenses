@@ -1,7 +1,7 @@
 FactoryGirl.define do
   factory :transaction do
-    account nil
-    comment "MyString"
-    amount 1.5
+    association :sender, factory: :john_cash
+    comment "some expense"
+    amount 4.3
   end
 end

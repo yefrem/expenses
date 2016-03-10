@@ -1,7 +1,25 @@
 FactoryGirl.define do
-  factory :account do
-    user nil
+  factory :john_cash, class: Account do
+    association :user, factory: :john
     title 'Cash'
-    balance 1.5
+    balance 10
+  end
+
+  factory :john_bank, class: Account do
+    association :user, factory: :john
+    title 'Bank'
+    balance 150
+  end
+
+  factory :peter_cash do
+    association :user, factory: :peter
+    title 'Cash'
+    balance 10
+  end
+
+  factory :peter_bank, class: Account do
+    association :user, factory: :peter
+    title 'Bank'
+    balance 150
   end
 end
