@@ -11,7 +11,7 @@ FactoryGirl.define do
     balance 150
   end
 
-  factory :peter_cash do
+  factory :peter_cash, class: Account do
     association :user, factory: :peter
     title 'Cash'
     balance 10
