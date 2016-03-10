@@ -7,6 +7,11 @@ gem 'rails', '4.2.5.2'
 gem 'sqlite3'
 gem 'pg'
 gem 'rails-api'
+gem 'active_model_serializers'
+gem 'will_paginate'
+gem 'api-pagination'
+gem 'airborne'
+
 # Use SCSS for stylesheets
 gem 'sass-rails', '~> 5.0'
 # Use Uglifier as compressor for JavaScript assets
