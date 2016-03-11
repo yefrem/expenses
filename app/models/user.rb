@@ -1,6 +1,10 @@
 class User < ActiveRecord::Base
+  # Include default devise modules.
+  devise :database_authenticatable, :registerable, :rememberable
+        #:recoverable, :trackable, :validatable, :confirmable, :omniauthable
+  include DeviseTokenAuth::Concerns::User
   validates :name, :email, presence: true
 
-  # will start with one default account but possible add multi account feature
+  #todo: will start with one default account but possible add multi account feature
   has_many :accounts
 end

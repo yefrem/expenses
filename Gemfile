@@ -12,6 +12,9 @@ gem 'will_paginate'
 gem 'api-pagination'
 gem 'airborne'
 
+gem 'devise_token_auth'
+gem 'cancancan'
+
 # Use SCSS for stylesheets
 gem 'sass-rails', '~> 5.0'
 # Use Uglifier as compressor for JavaScript assets
