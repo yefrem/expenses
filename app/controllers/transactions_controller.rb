@@ -1,7 +1,10 @@
 class TransactionsController < ApplicationController
-  before_action :set_user
-  before_action :set_account
-  before_action :set_transaction, only: [:show, :update, :destroy]
+  load_and_authorize_resource :user
+  load_and_authorize_resource :account, :through => :user
+  # before_action :set_user
+  # before_action :set_account
+  load_and_authorize_resource :transaction, :through => :account
+  # before_action :set_transaction, only: [:show, :update, :destroy]
 
   # GET /transactions
   # GET /transactions.json
@@ -54,18 +57,18 @@ class TransactionsController < ApplicationController
     !(@transaction.sender && @transaction.sender.user_id != @user.id) \
       && !(@transaction.receiver && @transaction.receiver.user_id != @user.id)
   end
-
-  def set_user
-    @user = User.find(params[:user_id])
-  end
-
-  def set_account
-    @account = @user.accounts.find(params[:account_id])
-  end
-
-  def set_transaction
-    @transaction = @account.transactions.find(params[:id])
-  end
+  #
+  # def set_user
+  #   @user = User.find(params[:user_id])
+  # end
+  #
+  # def set_account
+  #   @account = @user.accounts.find(params[:account_id])
+  # end
+  #
+  # def set_transaction
+  #   @transaction = @account.transactions.find(params[:id])
+  # end
 
   def transaction_params
     params.require(:transaction).permit(:amount, :comment, :sender_id, :receiver_id, :time)

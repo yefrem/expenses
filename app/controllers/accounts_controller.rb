@@ -1,5 +1,8 @@
 class AccountsController < ApplicationController
-  before_action :set_user
+  load_and_authorize_resource :user
+  load_and_authorize_resource :through => :user#, only: [:show, :update, :destroy]
+
+  # before_action :set_user
   before_action :set_account, only: [:show, :update, :destroy]
 
   def show

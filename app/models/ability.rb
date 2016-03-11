@@ -11,7 +11,11 @@ class Ability
       # can :manage, Account do |a|
       #   a.user.id == a.user.id
       # end
-      can :manage, User, {:id => user.id}
+      can [:read, :update], User, {:id => user.id}
+      cannot :index, User
+
+      can :manage, Transaction, {:sender => {:user_id => user.id}}
+      can :manage, Transaction, {:receiver => {:user_id => user.id}}
     end
     # Define abilities for the passed in user here. For example:
     #
