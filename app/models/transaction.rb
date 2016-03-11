@@ -23,6 +23,8 @@ class Transaction < ActiveRecord::Base
         self.receiver.save!
       end
     end
+
+    true
   end
 
   private

@@ -16,8 +16,6 @@ class AccountsController < ApplicationController
   end
 
   def update
-    @account = Account.find(params[:id])
-
     if @account.update(account_params)
       head :no_content
     else

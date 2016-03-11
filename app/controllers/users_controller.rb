@@ -30,8 +30,6 @@ class UsersController < ApplicationController
   # PATCH/PUT /users/1
   # PATCH/PUT /users/1.json
   def update
-    @user = User.find(params[:id])
-
     if @user.update(user_params)
       head :no_content
     else
