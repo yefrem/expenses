@@ -1,10 +1,10 @@
 source 'https://rubygems.org'
 
+ruby '2.1.5'
 
 # Bundle edge Rails instead: gem 'rails', github: 'rails/rails'
 gem 'rails', '4.2.5.2'
 # Use sqlite3 as the database for Active Record
-gem 'sqlite3'
 gem 'pg'
 gem 'rails-api'
 gem 'active_model_serializers'
@@ -49,6 +49,10 @@ group :development, :test do
   gem 'rspec-rails'
   gem "factory_girl_rails"
   gem "timecop"
+end
+
+group :production do
+  gem 'rails_12factor'
 end
 
 group :development do
