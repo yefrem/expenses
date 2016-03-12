@@ -1,2 +1,4 @@
 asset 'angular'
+asset 'ng-token-auth'
+asset 'angular-route'
 asset 'bootstrap-sass-official'
