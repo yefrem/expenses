@@ -48,6 +48,7 @@ GEM
     bcrypt (3.1.11)
     binding_of_caller (0.7.2)
       debug_inspector (>= 0.0.1)
+    bower-rails (0.10.0)
     builder (3.2.2)
     byebug (8.2.2)
     cancancan (1.13.1)
@@ -189,8 +190,6 @@ GEM
     thread_safe (0.3.5)
     tilt (2.0.2)
     timecop (0.8.0)
-    turbolinks (2.5.3)
-      coffee-rails
     tzinfo (1.2.2)
       thread_safe (~> 0.1)
     uglifier (2.7.2)
@@ -215,6 +214,7 @@ DEPENDENCIES
   active_model_serializers
   airborne
   api-pagination
+  bower-rails
   byebug
   cancancan
   coffee-rails (~> 4.1.0)
@@ -231,7 +231,6 @@ DEPENDENCIES
   spring
   sqlite3
   timecop
-  turbolinks
   uglifier (>= 1.3.0)
   web-console (~> 2.0)
   will_paginate

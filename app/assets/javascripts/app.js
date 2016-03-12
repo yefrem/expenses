@@ -1,0 +1,1 @@
+expenses = angular.module('expenses',[]);

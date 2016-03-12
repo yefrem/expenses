@@ -7,6 +7,8 @@ class ApplicationController < ActionController::API
 
   include ActionController::Serialization
 
+  before_action :authenticate_user!
+
   def default_serializer_options
     {root: false}
   end
