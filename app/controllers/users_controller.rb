@@ -1,4 +1,4 @@
-class UsersController < ApplicationController
+class UsersController < ApiController
   load_and_authorize_resource
   # before_action :set_user, only: [:show, :update, :destroy]
 

@@ -1,4 +1,4 @@
-class TransactionsController < ApplicationController
+class TransactionsController < ApiController
   load_and_authorize_resource :user
   load_and_authorize_resource :account, :through => :user
   # before_action :set_user

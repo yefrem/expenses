@@ -1,4 +1,4 @@
-class AccountsController < ApplicationController
+class AccountsController < ApiController
   load_and_authorize_resource :user
   load_and_authorize_resource :through => :user#, only: [:show, :update, :destroy]
 
