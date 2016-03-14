@@ -1,4 +1,6 @@
 class TransactionsController < ApiController
+  include CleanPagination
+
   load_and_authorize_resource :user
   load_and_authorize_resource :account, :through => :user
   # before_action :set_user
@@ -9,9 +11,12 @@ class TransactionsController < ApiController
   # GET /transactions
   # GET /transactions.json
   def index
-    @transactions = paginate @account.transactions
+    @transactions = @account.transactions
+    paginate @transactions.count, 20 do |limit, offset|
+      render json: @transactions.limit(limit).offset(offset)
+    end
 
-    render json: @transactions
+    # render json: @transactions
   end
 
   # POST /transactions
