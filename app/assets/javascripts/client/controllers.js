@@ -10,37 +10,69 @@ var expensesControllers = angular.module('expensesControllers', [])
     if (User.loggedIn()){
       //$state.go('accounts');
     }
-    //$state.go('accounts');
-    //console.log($scope.user);
-    //$location.path('accounts');
-    //var a = $auth.user;
-    //var b = {};
-    //b.name = 'qq';
-    //console.log(a.name);
-    //console.log(b);
-    //if ($auth.user.name){
-    //  console.log('redir');
-    //  $location.path("/accounts");
-    //}
-    //$scope.name = 'smth';
   }])
 
 .controller('AccountsCtrl', ['$scope', '$http', '$auth', 'User', 'Accounts',
   function($scope, $http, $auth, User, Accounts) {
     $scope.accounts = Accounts.getAccounts();
+    $scope.deleteAcc = function(id){
+      if (!confirm('Are you sure?')){
+        return false;
+      }
+      Accounts.deleteAcc(id).then(function(){
+        reloadAccs();
+      });
+    };
+
+    $scope.createAcc = function(){
+      Accounts.createNew($scope.newAccTitle).then(function(){
+        reloadAccs();
+      });
+    };
+
+    $scope.addExpense = function(){
+      console.log('add expense');
+      Accounts.addTransaction({
+        sender_id: $scope.expenseAccId,
+        amount: $scope.expenseAmount,
+        comment: $scope.expenseComment
+      }).then(function(){
+        reloadAccs();
+      });
+    };
+
+    $scope.addIncome = function(){
+      Accounts.addTransaction({
+        receiver_id: $scope.incomeAccId,
+        amount: $scope.incomeAmount,
+        comment: $scope.incomeComment
+      }).then(function(){
+        reloadAccs();
+      });
+    };
+
+    $scope.addTransfer = function(){
+      Accounts.addTransaction({
+        sender_id: $scope.transferFromId,
+        receiver_id: $scope.transferToId,
+        amount: $scope.transferAmount,
+        comment: $scope.transferComment
+      }).then(function(){
+        reloadAccs();
+      });
+    };
+
+    function reloadAccs(){
+      Accounts.reload().then(function(){
+        $scope.newAccTitle = '';
+        $scope.accounts = Accounts.getAccounts()
+      });
+    }
   }])
 
-.controller('AuthCtrl', ['$scope', '$http', '$auth',
-  function($scope, $http, $auth) {
-    console.log('auth');
-  }]);
-//phonecatControllers.controller('PhoneDetailCtrl', ['$scope', '$routeParams', 'Phone',
-//  function($scope, $routeParams, Phone) {
-//    $scope.phone = Phone.get({phoneId: $routeParams.phoneId}, function(phone) {
-//      $scope.mainImageUrl = phone.images[0];
-//    });
-//
-//    $scope.setImage = function(imageUrl) {
-//      $scope.mainImageUrl = imageUrl;
-//    };
-//  }]);
+.controller('AccountsSingleCtrl', ['$scope', '$http', '$stateParams', 'User', 'Accounts',
+  function($scope, $http, $stateParams, User, Accounts) {
+    $scope.currentAcc = Accounts.getById($stateParams.id);
+    console.log(Accounts.getById($stateParams.id));
+  }])
+;

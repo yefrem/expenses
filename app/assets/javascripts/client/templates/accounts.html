@@ -1,5 +1,53 @@
 <h1>Your Accounts</h1>
-<button class="btn btn-success" ng-click="load()">Load</button>
+<form ng-valid ng-submit="createAcc()">
+  <input ng-valid ng-model="newAccTitle" />
+  <button type="submit">Create</button>
+</form>
 <ul>
-  <li ng-repeat="acc in accounts"><a href="/account/{{acc.id}}">{{acc.title}}</a></li>
+  <li ng-repeat="acc in accounts">
+    <a ui-sref="user.accounts.single({id: acc.id})">{{acc.title}}: ${{acc.balance}}</a><button ng-click="deleteAcc(acc.id)">Delete</button>
+  </li>
 </ul>
+<div>
+  <form ng-valid ng-submit="addExpense()">
+    <h2>Add Expense</h2>
+    <select ng-model="expenseAccId">
+      <option value="">Select account</option>
+      <option ng-repeat="acc in accounts" value="{{acc.id}}">{{acc.title}}</option>
+    </select>
+    <input ng-model="expenseComment" placeholder="Comment"/>
+    <input ng-model="expenseAmount" placeholder="Amount" />
+    <button type="submit">Add</button>
+  </form>
+</div>
+<div>
+  <form ng-valid ng-submit="addIncome()">
+    <h2>Add Income</h2>
+    <select ng-model="incomeAccId">
+      <option value="">Select account</option>
+      <option ng-repeat="acc in accounts" value="{{acc.id}}">{{acc.title}}</option>
+    </select>
+    <input ng-model="incomeComment" placeholder="Comment"/>
+    <input ng-model="incomeAmount" placeholder="Amount" />
+    <button type="submit">Add</button>
+  </form>
+</div>
+<div>
+  <form ng-valid ng-submit="addTransfer()">
+    <h2>Add Transfer</h2>
+    <select ng-model="transferFromId">
+      <option value="">From account</option>
+      <option ng-repeat="acc in accounts" value="{{acc.id}}">{{acc.title}}</option>
+    </select>
+    <select ng-model="transferToId">
+      <option value="">To account</option>
+      <option ng-repeat="acc in accounts" value="{{acc.id}}">{{acc.title}}</option>
+    </select>
+    <input ng-model="transferComment" placeholder="Comment"/>
+    <input ng-model="transferAmount" placeholder="Amount" />
+    <button type="submit">Add</button>
+  </form>
+</div>
+<div ui-view>
+  Select account to see transactions
+</div>

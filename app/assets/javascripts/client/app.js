@@ -26,7 +26,7 @@ var expensesApp = angular.module('expensesApp',[
       },
 
       handleTokenValidationResponse: function(response) {
-        console.log('validation');
+        //console.log('validation');
         UserProvider.$get().setData(response.data);
         return response.data;
       }
@@ -50,7 +50,7 @@ var expensesApp = angular.module('expensesApp',[
           template: '<ui-view/>',
           resolve: {
             auth: ['$auth', function ($auth) {
-              console.log('resolve');
+              //console.log('resolve');
               return $auth.validateUser();
             }]
           }
@@ -65,10 +65,18 @@ var expensesApp = angular.module('expensesApp',[
           },
           resolve: {
             Smth: ['auth', 'Accounts', function(auth, Accounts) {
-              console.log('resolve 2');
-              console.log(auth);
+              //console.log('resolve 2');
+              //console.log(auth);
               return Accounts.loadUserData();
             }]
+          }
+        })
+        .state('user.accounts.single', {
+          url: "acc/:id",
+          templateUrl: "accounts_single.html",
+          controller: 'AccountsSingleCtrl',
+          data: {
+            access: 'user'
           }
         })
         .state('users', {

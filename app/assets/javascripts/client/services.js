@@ -43,8 +43,56 @@ angular.module('expensesServices', [])
           });
         },
 
+        reload: function () {
+          return this.loadUserData();
+        },
+
         getAccounts: function(){
           return userData.accounts;
+        },
+
+        createNew: function(title){
+          return $http({
+            method: "POST",
+            url: '/users/'+User.getData().id+'/accounts.json',
+            headers: $auth.retrieveData('auth_headers'),
+            data: {
+              account: {
+                title: title,
+                user_id: User.get('id')
+              }
+            }
+          });
+        },
+
+        deleteAcc: function(id){
+          return $http({
+            method: "DELETE",
+            url: '/users/'+User.getData().id+'/accounts/'+id+'.json',
+            headers: $auth.retrieveData('auth_headers')
+          });
+        },
+
+        getById: function(id){
+          for (var i in userData.accounts){
+            if (userData.accounts[i].id == id){
+              return userData.accounts[i];
+            }
+          }
+        },
+
+        addTransaction: function(transactionData){
+          var accId = transactionData.sender_id ? transactionData.sender_id : transactionData.receiver_id;
+          return $http({
+            method: "POST",
+            url: '/users/'+User.getData().id+'/accounts/'+accId+'/transactions.json',
+            headers: $auth.retrieveData('auth_headers'),
+            data: {
+              account_id: accId,
+              user_id: User.get('id'),
+              transaction: transactionData
+            }
+          });
         }
       }
   }])
