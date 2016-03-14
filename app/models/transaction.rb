@@ -10,14 +10,16 @@ class Transaction < ActiveRecord::Base
 
   # todo: should we also override save! method?
   def save
-    if self.receiver && (self.sender.user_id != self.receiver.user_id)
+    if self.receiver && self.sender && (self.sender.user_id != self.receiver.user_id)
       raise ArgumentError.new('Transactions between users are not allowed')
     end
 
     self.transaction do
       raise ActiveRecord::Rollback if !super
-      self.sender.balance -= self.amount
-      self.sender.save!
+      if self.sender
+        self.sender.balance -= self.amount
+        self.sender.save!
+      end
       if self.receiver
         self.receiver.balance += self.amount
         self.receiver.save!
