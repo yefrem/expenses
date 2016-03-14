@@ -18,6 +18,7 @@
 //= require angular-cookie
 //= require ng-token-auth
 //= require angular-rails-templates
+//= require angular-paginate-anything
 // =require_tree ./client/templates
 //= require client/app
 //= require client/controllers

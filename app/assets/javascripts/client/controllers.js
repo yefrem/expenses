@@ -70,9 +70,14 @@ var expensesControllers = angular.module('expensesControllers', [])
     }
   }])
 
-.controller('AccountsSingleCtrl', ['$scope', '$http', '$stateParams', 'User', 'Accounts',
-  function($scope, $http, $stateParams, User, Accounts) {
-    $scope.currentAcc = Accounts.getById($stateParams.id);
-    console.log(Accounts.getById($stateParams.id));
+.controller('AccountsSingleCtrl', ['$scope', '$auth', '$stateParams', 'User', 'Accounts',
+  function($scope, $auth, $stateParams, User, Accounts) {
+    $scope.$watchCollection('accounts', function(param){
+      $scope.currentAcc = Accounts.getById($stateParams.id);
+      $scope.page = 0;
+      $scope.perPage = 10;
+      $scope.url = '/users/'+User.getData().id+'/accounts/'+$stateParams.id+'/transactions.json';
+      $scope.authHeaders = $auth.retrieveData('auth_headers');
+    });
   }])
 ;

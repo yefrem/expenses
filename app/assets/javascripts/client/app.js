@@ -4,7 +4,8 @@ var expensesApp = angular.module('expensesApp',[
   'ui.router',
   'templates',
   'expensesControllers',
-  'expensesServices'
+  'expensesServices',
+  'bgf.paginateAnything'
 ])
 
 .config(['$authProvider', 'UserProvider',

@@ -1,2 +1,18 @@
 <div ng-if="!currentAcc">Acc not found</div>
-{{currentAcc.title}}
+
+<div ng-if="currentAcc">
+{{currentAcc.title}}: ${{currentAcc.balance}}
+  <h3>Transactions</h3>
+  <div ng-repeat="t in transactions">
+    {{t.id}}/{{t.comment}}/{{t.amount}}
+  </div>
+  <bgf-pagination
+          page="page"
+          per-page="perPage"
+          client-limit="clientLimit"
+          url="url"
+          headers="authHeaders"
+          link-group-size="2"
+          collection="transactions">
+  </bgf-pagination>
+</div>
