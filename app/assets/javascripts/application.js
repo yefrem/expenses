@@ -13,11 +13,13 @@
 //= require jquery
 //= require jquery_ujs
 //= require angular
-//= require angular-route
+/*//= require angular-route*/
+//= require angular-ui-router
 //= require angular-cookie
 //= require ng-token-auth
 //= require angular-rails-templates
 // =require_tree ./client/templates
 //= require client/app
 //= require client/controllers
+//= require client/services
 //= require_tree .

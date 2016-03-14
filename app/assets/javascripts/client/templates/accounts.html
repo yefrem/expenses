@@ -1,0 +1,5 @@
+<h1>Your Accounts</h1>
+<button class="btn btn-success" ng-click="load()">Load</button>
+<ul>
+  <li ng-repeat="acc in accounts"><a href="/account/{{acc.id}}">{{acc.title}}</a></li>
+</ul>

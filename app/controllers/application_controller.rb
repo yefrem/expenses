@@ -6,6 +6,7 @@ class ApplicationController < ActionController::API
 
   include ActionController::Serialization
 
+  before_action :configure_permitted_parameters, if: :devise_controller?
 
   def default_serializer_options
     {root: false}
@@ -13,5 +14,12 @@ class ApplicationController < ActionController::API
 
   rescue_from CanCan::AccessDenied do |exception|
     render :nothing => true, :status => 403 # todo: errors in json
+  end
+
+  protected
+
+  def configure_permitted_parameters
+    # devise_parameter_sanitizer.permit(:sign_up, keys: [:name])
+    devise_parameter_sanitizer.for(:sign_up) << :name#, :email, :password, :password_confirmation) }
   end
 end
