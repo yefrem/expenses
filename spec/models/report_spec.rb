@@ -43,12 +43,12 @@ RSpec.describe Report, type: :model do
 
   it "should return correct transactions" do
     r = Report.new(account: @cash, date_from: DateTime.new(2016, 3, 1), date_to: DateTime.new(2016, 3, 5))
-    expect(r.transactions).to eq(@transactions.slice(0..7))
+    expect(r.transactions).to eq(@transactions.slice(0..7).reverse)
 
     r = Report.new(account: @cash, date_from: DateTime.new(2016, 2, 1), date_to: DateTime.new(2016, 2, 15))
     expect(r.transactions).to be_empty
 
     r = Report.new(account: @cash, date_from: DateTime.new(2016, 3, 5), date_to: DateTime.new(2016, 3, 10))
-    expect(r.transactions).to eq(@transactions.slice(6..9))
+    expect(r.transactions).to eq(@transactions.slice(6..9).reverse)
   end
 end

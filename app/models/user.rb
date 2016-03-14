@@ -1,5 +1,9 @@
 class User < ActiveRecord::Base
   # Include default devise modules.
+  default_scope {
+    order('created_at ASC')
+  }
+
   devise :database_authenticatable, :registerable, :rememberable
         #:recoverable, :trackable, :validatable, :confirmable, :omniauthable
   include DeviseTokenAuth::Concerns::User

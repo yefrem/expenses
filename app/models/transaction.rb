@@ -1,6 +1,10 @@
 class Transaction < ActiveRecord::Base
   validates :comment, :amount, :time, presence: true
 
+  default_scope {
+    order('created_at DESC')
+  }
+
   # has two account field for transactions between accounts
   # for one account transaction only sender is used
   belongs_to :sender, :class_name => Account

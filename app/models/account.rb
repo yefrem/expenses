@@ -1,6 +1,10 @@
 class Account < ActiveRecord::Base
   validates :title, presence: true
 
+  default_scope {
+    order('created_at ASC')
+  }
+
   belongs_to :user
   # has_many :transactions
 
