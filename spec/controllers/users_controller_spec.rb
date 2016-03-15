@@ -2,8 +2,8 @@ require 'rails_helper'
 
 RSpec.describe UsersController, type: :controller do
   before :each do
-    create(:peter)
-    create(:john)
+    create(:peter, name: 'Peter')
+    create(:john, name: 'John')
   end
 
   context "as admin" do

@@ -1,12 +1,12 @@
 FactoryGirl.define do
   factory :john, class: User do
-    name 'John'
+    sequence(:name) { |n| "john#{n}" }
     sequence(:email) { |n| "john#{n}@example.com" }
     password 'somepass'
   end
 
   factory :peter, class: User do
-    name 'Peter'
+    sequence(:name) { |n| "peter#{n}" }
     sequence(:email) { |n| "peter#{n}@example.com" }
     password 'somepass'
   end
