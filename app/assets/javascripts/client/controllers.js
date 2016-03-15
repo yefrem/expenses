@@ -9,8 +9,8 @@ var expensesControllers = angular.module('expensesControllers', [])
     $scope.selected = 'login';
   }])
 
-.controller('AccountsCtrl', ['$scope', '$http', '$auth', 'User', 'Accounts', '$filter',
-  function($scope, $http, $auth, User, Accounts, $filter) {
+.controller('AccountsCtrl', ['$scope', '$http', '$auth', 'User', 'Accounts', '$filter', '$anchorScroll', '$location',
+  function($scope, $http, $auth, User, Accounts, $filter, $anchorScroll, $location) {
     $scope.selected = 'expense';
     $scope.accounts = Accounts.getAccounts();
     $scope.expenseDate = todayStr();
@@ -135,6 +135,8 @@ var expensesControllers = angular.module('expensesControllers', [])
       }
 
       $scope.editedTransaction = t;
+      $location.hash('forms');
+      $anchorScroll();
     };
 
     function reloadAccs(){
