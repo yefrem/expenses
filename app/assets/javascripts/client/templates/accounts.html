@@ -9,7 +9,7 @@
       <div class="col-lg-3">
         <h1 class="accs-title">Your Accounts</h1>
         <form ng-valid class="form-inline" ng-submit="createAcc()">
-          <input ng-valid class="form-control" ng-model="newAccTitle" placeholder="New account" />
+          <input ng-valid class="form-control" ng-model="newAccTitle" placeholder="New account" required />
           <button class="btn btn-default" type="submit">Create</button>
         </form>
         <ul class="accounts">
@@ -33,14 +33,14 @@
                 <form ng-valid class="form-inline" ng-submit="addExpense()">
                   <h2 class="form-header">Add Expense</h2>
                   <datepicker date-format="yyyy-MM-dd" >
-                    <input class="form-control" ng-model="expenseDate" placeholder="Date (empty for current)" />
+                    <input ng-readonly="true" class="form-control" ng-model="expenseDate" placeholder="Date (empty for current)" />
                   </datepicker>
-                  <select class="form-control" ng-model="expenseAccId">
+                  <select class="form-control" ng-model="expenseAccId" required>
                     <option value="">Select account</option>
                     <option ng-repeat="acc in accounts" value="{{acc.id}}">{{acc.title}}</option>
                   </select>
-                  <input ng-model="expenseComment" class="form-control" placeholder="Comment"/>
-                  <input ng-model="expenseAmount" class="form-control amount" placeholder="Amount" />
+                  <input ng-model="expenseComment" required class="form-control" placeholder="Comment"/>
+                  <input ng-model="expenseAmount" required class="form-control amount" placeholder="Amount" />
                   <button class="btn btn-success" type="submit">Add</button>
                 </form>
               </div>
@@ -48,14 +48,14 @@
                 <form ng-valid class="form-inline" ng-submit="addIncome()">
                   <h2 class="form-header">Add Income</h2>
                   <datepicker date-format="yyyy-MM-dd" >
-                    <input class="form-control" ng-model="incomeDate" placeholder="Date (empty for current)" />
+                    <input ng-readonly="true" class="form-control" ng-model="incomeDate" placeholder="Date (empty for current)" />
                   </datepicker>
-                  <select class="form-control" ng-model="incomeAccId">
+                  <select class="form-control" ng-model="incomeAccId" required>
                     <option value="">Select account</option>
                     <option ng-repeat="acc in accounts" value="{{acc.id}}">{{acc.title}}</option>
                   </select>
-                  <input class="form-control" ng-model="incomeComment" placeholder="Comment"/>
-                  <input class="form-control amount" ng-model="incomeAmount" placeholder="Amount" />
+                  <input class="form-control" ng-model="incomeComment" required placeholder="Comment"/>
+                  <input class="form-control amount" ng-model="incomeAmount" required placeholder="Amount" />
                   <button class="btn btn-success" type="submit">Add</button>
                 </form>
               </div>
@@ -63,18 +63,18 @@
                 <form ng-valid class="form-inline" ng-submit="addTransfer()">
                   <h2 class="form-header">Add Transfer</h2>
                   <datepicker date-format="yyyy-MM-dd" >
-                    <input class="form-control" ng-model="transferDate" placeholder="Date (empty for current)" />
+                    <input ng-readonly="true" class="form-control" ng-model="transferDate" placeholder="Date (empty for current)" />
                   </datepicker>
-                  <select class="form-control" ng-model="transferFromId">
+                  <select class="form-control" ng-model="transferFromId" required>
                     <option value="">From account</option>
                     <option ng-repeat="acc in accounts" value="{{acc.id}}">{{acc.title}}</option>
                   </select>
-                  <select class="form-control" ng-model="transferToId">
+                  <select class="form-control" ng-model="transferToId" required>
                     <option value="">To account</option>
                     <option ng-repeat="acc in accounts" value="{{acc.id}}">{{acc.title}}</option>
                   </select>
-                  <input class="form-control" ng-model="transferComment" placeholder="Comment"/>
-                  <input class="form-control amount" ng-model="transferAmount" placeholder="Amount" />
+                  <input class="form-control" ng-model="transferComment" required placeholder="Comment"/>
+                  <input class="form-control amount" ng-model="transferAmount" required placeholder="Amount" />
                   <button class="btn btn-success" type="submit">Add</button>
                 </form>
               </div>

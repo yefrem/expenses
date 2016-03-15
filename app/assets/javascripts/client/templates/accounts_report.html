@@ -4,10 +4,10 @@
   <h1>Account report: {{ currentAcc.title }}</h1>
   <form class="form-inline">
     <datepicker date-format="yyyy-MM-dd" >
-      <input class="form-control" ng-model="dateFrom" placeholder="From date" />
+      <input ng-readonly="true" class="form-control" ng-model="dateFrom" placeholder="From date" />
     </datepicker>
     <datepicker date-format="yyyy-MM-dd" >
-      <input class="form-control" ng-model="dateTo" placeholder="To date" />
+      <input ng-readonly="true" class="form-control" ng-model="dateTo" placeholder="To date" />
     </datepicker>
     <button class="btn btn-primary" ng-disabled="!dateFrom || !dateTo" ng-click="generate()">Generate report</button>
   </form>
