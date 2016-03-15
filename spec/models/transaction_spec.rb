@@ -63,6 +63,27 @@ RSpec.describe Transaction, type: :model do
     expect(cash.reload.balance).to eq(60)
   end
 
+  it "should update accs when sender or receiver changed" do
+    john = create(:john)
+    bank = create(:john_bank, user: john, balance: 100)
+    bank2 = create(:john_bank, user: john, balance: 50)
+    cash = create(:john_cash, user: john, balance: 60)
+    t = create(:transaction)
+    t.amount = 10
+    t.sender = bank
+    t.receiver = cash
+    t.save
+
+    expect(bank.reload.balance).to eq(90)
+    expect(cash.reload.balance).to eq(70)
+
+    t.sender = bank2
+    t.save
+    expect(bank.reload.balance).to eq(100)
+    expect(cash.reload.balance).to eq(70)
+    expect(bank2.reload.balance).to eq(40)
+  end
+
   it "should not allow accounts from different users" do
     t = build(:transaction)
     t.sender = create(:john_cash)

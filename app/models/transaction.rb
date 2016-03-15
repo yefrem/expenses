@@ -19,11 +19,12 @@ class Transaction < ActiveRecord::Base
     end
 
     self.transaction do
+      # byebug
       if self.persisted?
         old = {
             amount: self.amount_was,
-            sender_id: sender_id_was,
-            receiver_id: receiver_id_was,
+            sender_id: self.sender_id_was,
+            receiver_id: self.receiver_id_was,
         }
         new = {
             amount: self.amount,
