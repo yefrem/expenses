@@ -4,13 +4,13 @@
 
 var expensesControllers = angular.module('expensesControllers', [])
 
-.controller('HomeCtrl', ['$scope', '$location', 'User', '$state',
-  function($scope, $location, User, $state) {
+.controller('HomeCtrl', ['$scope',
+  function($scope) {
     $scope.selected = 'login';
   }])
 
-.controller('AccountsCtrl', ['$scope', '$http', '$auth', 'User', 'Accounts',
-  function($scope, $http, $auth, User, Accounts) {
+.controller('AccountsCtrl', ['$scope', '$http', '$auth', 'User', 'Accounts', '$filter',
+  function($scope, $http, $auth, User, Accounts, $filter) {
     $scope.selected = 'expense';
     $scope.accounts = Accounts.getAccounts();
     $scope.expenseDate = todayStr();
@@ -32,40 +32,109 @@ var expensesControllers = angular.module('expensesControllers', [])
     };
 
     $scope.addExpense = function(){
-      Accounts.addTransaction({
+      var data = {
         sender_id: $scope.expenseAccId,
         amount: $scope.expenseAmount,
         comment: $scope.expenseComment,
         time: $scope.expenseDate
-      }).then(function(){
-        resetForms();
-        reloadAccs();
-      });
+      };
+      if ($scope.editedTransaction){
+        data.id = $scope.editedTransaction.id;
+        Accounts.updateTransaction(data).then(function(){
+          $scope.resetForms();
+          reloadAccs();
+        });
+      } else {
+        Accounts.addTransaction(data).then(function () {
+          $scope.resetForms();
+          reloadAccs();
+        });
+      }
     };
 
     $scope.addIncome = function(){
-      Accounts.addTransaction({
+      var data = {
         receiver_id: $scope.incomeAccId,
         amount: $scope.incomeAmount,
         comment: $scope.incomeComment,
         time: $scope.incomeDate
-      }).then(function(){
-        resetForms();
-        reloadAccs();
-      });
+      };
+
+      if ($scope.editedTransaction){
+        data.id = $scope.editedTransaction.id;
+        Accounts.updateTransaction(data).then(function(){
+          $scope.resetForms();
+          reloadAccs();
+        });
+      } else {
+        Accounts.addTransaction(data).then(function () {
+          $scope.resetForms();
+          reloadAccs();
+        });
+      }
     };
 
     $scope.addTransfer = function(){
-      Accounts.addTransaction({
+      var data = {
         sender_id: $scope.transferFromId,
         receiver_id: $scope.transferToId,
         amount: $scope.transferAmount,
         comment: $scope.transferComment,
         time: $scope.transferDate
-      }).then(function(){
-        resetForms();
-        reloadAccs();
-      });
+      };
+
+      if ($scope.editedTransaction){
+        data.id = $scope.editedTransaction.id;
+        Accounts.updateTransaction(data).then(function(){
+          $scope.resetForms();
+          reloadAccs();
+        });
+      } else {
+        Accounts.addTransaction(data).then(function () {
+          $scope.resetForms();
+          reloadAccs();
+        });
+      }
+    };
+
+    $scope.editTransaction = function(id) {
+      var t;
+      // TODO always feel bad when doing this
+      for (var i in this.transactions){
+        if (this.transactions[i].id == id){
+          t = this.transactions[i];
+        }
+      }
+
+      if (!t){
+        return false;
+      }
+
+      var date = $filter('date')(t.time, 'yyyy-MM-dd');
+
+      if (t.sender && t.receiver){
+        // TODO: I swear not to write anything like this anymore
+        $scope.editType = $scope.selected = 'transfer';
+        $scope.transferDate = date;
+        $scope.transferFromId = t.sender.id;
+        $scope.transferToId = t.receiver.id;
+        $scope.transferAmount = t.amount;
+        $scope.transferComment = t.comment;
+      } else if (t.sender){
+        $scope.expenseDate = date;
+        $scope.expenseAccId = t.sender.id;
+        $scope.expenseAmount = t.amount;
+        $scope.expenseComment = t.comment;
+        $scope.editType = $scope.selected = 'expense';
+      } else {
+        $scope.incomeAccId = t.receiver.id;
+        $scope.incomeDate = date;
+        $scope.incomeAmount = t.amount;
+        $scope.incomeComment = t.comment;
+        $scope.editType = $scope.selected = 'income';
+      }
+
+      $scope.editedTransaction = t;
     };
 
     function reloadAccs(){
@@ -82,7 +151,10 @@ var expensesControllers = angular.module('expensesControllers', [])
           + (today.getDate() > 9 ? '' : '0') + today.getDate()
     }
 
-    function resetForms(){
+    $scope.resetForms = function (){
+      $scope.editType = null;
+      $scope.editedTransaction = null;
+
       $scope.expenseAccId = null;
       $scope.expenseComment = '';
       $scope.expenseAmount = '';
@@ -100,7 +172,6 @@ var expensesControllers = angular.module('expensesControllers', [])
 
 .controller('AccountsSingleCtrl', ['$scope', '$auth', '$state', '$stateParams', 'User', 'Accounts',
   function($scope, $auth, $state, $stateParams, User, Accounts) {
-    $scope.transactions = [];
     $scope.currentAcc = Accounts.getById($stateParams.id);
     $scope.page = 0;
     $scope.perPage = 10;

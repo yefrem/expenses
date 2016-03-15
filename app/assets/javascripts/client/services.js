@@ -94,6 +94,20 @@ angular.module('expensesServices', [])
           }
         },
 
+        updateTransaction: function(transactionData){
+          var accId = transactionData.sender_id ? transactionData.sender_id : transactionData.receiver_id;
+          return $http({
+            method: "PATCH",
+            url: '/users/'+User.getData().id+'/accounts/'+accId+'/transactions/'+transactionData.id+'.json',
+            headers: $auth.retrieveData('auth_headers'),
+            data: {
+              account_id: accId,
+              user_id: User.get('id'),
+              transaction: transactionData
+            }
+          });
+        },
+
         addTransaction: function(transactionData){
           var accId = transactionData.sender_id ? transactionData.sender_id : transactionData.receiver_id;
           return $http({

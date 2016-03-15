@@ -59,6 +59,9 @@ tr.transaction.income .comment{
 }
 
 datepicker {
+  input {
+    width: 120px !important;
+  }
   float: none;
   margin-right: 5px;
 }
