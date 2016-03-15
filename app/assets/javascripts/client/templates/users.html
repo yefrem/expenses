@@ -1,28 +1,38 @@
-<table class="table">
-  <thead>
-  <tr>
-    <th>Id</th>
-    <th>Name</th>
-    <th>Email</th>
-    <th></th>
-  </tr>
-  </thead>
-  <tbody>
-  <tr class="transaction" ng-repeat="u in users">
-    <td>{{u.id}}</td>
-    <td>{{u.name}}</td>
-    <td>{{u.email}}</td>
-    <td><a ng-if="user.id != u.id" title="Delete user" ng-click="deleteUser(u.id)"><span class="glyphicon glyphicon-remove"></span></a></td>
-  </tr>
-  </tbody>
-</table>
+<div class="panel panel-default">
+  <div class="panel-heading">
+    <span>Hello, {{user.name}}</span>
+    <button class="btn btn-primary" ng-click="signOut()">Sign out</button>
+    <a ui-sref="user.accounts">Back to accounts</a>
+  </div>
+  <div class="panel-body">
+    <h1>User management</h1>
+    <table class="table">
+      <thead>
+      <tr>
+        <th>Id</th>
+        <th>Name</th>
+        <th>Email</th>
+        <th></th>
+      </tr>
+      </thead>
+      <tbody>
+      <tr class="transaction" ng-repeat="u in users">
+        <td>{{u.id}}</td>
+        <td>{{u.name}}</td>
+        <td>{{u.email}}</td>
+        <td><a ng-if="user.id != u.id" title="Delete user" ng-click="deleteUser(u.id)"><span class="glyphicon glyphicon-remove"></span></a></td>
+      </tr>
+      </tbody>
+    </table>
 
-<bgf-pagination
-        page="page"
-        per-page="perPage"
-        client-limit="clientLimit"
-        url="url"
-        headers="authHeaders"
-        link-group-size="2"
-        collection="users">
-</bgf-pagination>
+    <bgf-pagination
+            page="page"
+            per-page="perPage"
+            client-limit="clientLimit"
+            url="url"
+            headers="authHeaders"
+            link-group-size="2"
+            collection="users">
+    </bgf-pagination>
+  </div>
+</div>
