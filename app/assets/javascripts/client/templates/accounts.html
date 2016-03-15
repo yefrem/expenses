@@ -1,8 +1,8 @@
 <div class="panel panel-success">
   <div class="panel-heading">
-      <span>Hello, {{user.name}}</span>
-
-      <button class="btn btn-primary" ng-click="signOut()">Sign out</button>
+    <span>Hello, {{user.name}}</span>
+    <button class="btn btn-primary" ng-click="signOut()">Sign out</button>
+    <a ng-if="user.admin" ui-sref="users">Administration</a>
   </div>
   <div class="panel-body">
     <div class="row">

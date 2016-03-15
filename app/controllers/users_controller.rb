@@ -1,4 +1,6 @@
 class UsersController < ApiController
+  include CleanPagination
+
   load_and_authorize_resource
   # before_action :set_user, only: [:show, :update, :destroy]
 
@@ -6,8 +8,10 @@ class UsersController < ApiController
   # GET /users.json
   def index
     @users = User.all
-
-    render json: @users
+    paginate @users.count, 20 do |limit, offset|
+      render json: @users.limit(limit).offset(offset)
+    end
+    # render json: @users
   end
 
   # GET /users/1

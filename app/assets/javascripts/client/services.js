@@ -29,6 +29,19 @@ angular.module('expensesServices', [])
     };
   })
 
+  .factory('Users', ['$http', '$auth', function($http, $auth){
+      return {
+        deleteById: function (id) {
+          return $http({
+            method: "DELETE",
+            url: '/users/'+id+'.json',
+            headers: $auth.retrieveData('auth_headers')
+          });
+        }
+      };
+  }])
+
+
   .factory('Accounts', ['User', '$http', '$auth', function(User, $http, $auth){
       var userData = null;
       return {

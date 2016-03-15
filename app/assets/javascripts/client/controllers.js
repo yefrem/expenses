@@ -95,11 +95,6 @@ var expensesControllers = angular.module('expensesControllers', [])
 .controller('AccountsReportCtrl', ['$scope', '$auth', '$state', '$stateParams', 'User', 'Accounts',
   function($scope, $auth, $state, $stateParams, User, Accounts) {
     $scope.currentAcc = Accounts.getById($stateParams.id);
-    //$scope.$watchCollection('accounts', function(before, after){
-    //  if (before != after){
-    //    $state.go('user.accounts.report', {id: $stateParams.id}, {reload: true});
-    //  }
-    //});
 
     $scope.generate = function(){
       Accounts.report({
@@ -110,6 +105,23 @@ var expensesControllers = angular.module('expensesControllers', [])
         date_to: this.dateTo
       }).then(function(response){
         $scope.report = response.data;
+      });
+    };
+  }])
+
+.controller('UsersCtrl', ['$scope', '$auth', '$state', '$stateParams', 'Users',
+  function($scope, $auth, $state, $stateParams, Users) {
+    $scope.page = 0;
+    $scope.perPage = 10;
+    $scope.url = '/users.json';
+    $scope.authHeaders = $auth.retrieveData('auth_headers');
+
+    $scope.deleteUser = function(id){
+      if (!confirm('Are you sure?')){
+        return false;
+      }
+      Users.deleteById(id).then(function(){
+        $state.go('users', {}, {reload: true});
       });
     };
   }])

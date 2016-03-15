@@ -67,8 +67,6 @@ var expensesApp = angular.module('expensesApp',[
           },
           resolve: {
             Smth: ['auth', 'Accounts', function(auth, Accounts) {
-              //console.log('resolve 2');
-              //console.log(auth);
               return Accounts.loadUserData();
             }]
           }
@@ -95,6 +93,15 @@ var expensesApp = angular.module('expensesApp',[
           controller: 'UsersCtrl',
           data: {
             access: 'admin'
+          },
+          resolve: {
+            auth: ['$auth', function ($auth) {
+              //console.log('resolve');
+              return $auth.validateUser();
+            }],
+            Smth: ['auth', 'Accounts', function(auth, Accounts) {
+              return Accounts.loadUserData();
+            }]
           }
         })
     ;
@@ -105,15 +112,15 @@ var expensesApp = angular.module('expensesApp',[
     $rootScope.$on("$stateChangeSuccess",
       function (event, toState, toParams, fromState, fromParams) {
         var user = User.getData();
-        if (toState.data.access == 'user'){
+        if (toState.data.access != 'anon'){
           if (!user) {
             $state.go('login');
           }
         }
 
         if (toState.data.access == 'admin'){
-          if (!user.isAdmin()) {
-            $state.go('login');
+          if (!user.admin) {
+            $state.go('user.accounts');
           }
         }
       });
@@ -145,7 +152,8 @@ var expensesApp = angular.module('expensesApp',[
     });
 
     $rootScope.$on('auth:registration-email-error', function(ev, reason) {
-      $rootScope.registerError = reason.errors.join(',');
+      console.log(reason);
+      $rootScope.registerError = reason.errors.full_messages.join(',');
     });
 }])
 ;
