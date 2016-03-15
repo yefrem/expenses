@@ -13,6 +13,9 @@ var expensesControllers = angular.module('expensesControllers', [])
   function($scope, $http, $auth, User, Accounts) {
     $scope.selected = 'expense';
     $scope.accounts = Accounts.getAccounts();
+    $scope.expenseDate = todayStr();
+    $scope.incomeDate = todayStr();
+    $scope.transferDate = todayStr();
     $scope.deleteAcc = function(id){
       if (!confirm('Are you sure?')){
         return false;
@@ -29,12 +32,13 @@ var expensesControllers = angular.module('expensesControllers', [])
     };
 
     $scope.addExpense = function(){
-      console.log('add expense');
       Accounts.addTransaction({
         sender_id: $scope.expenseAccId,
         amount: $scope.expenseAmount,
-        comment: $scope.expenseComment
+        comment: $scope.expenseComment,
+        time: $scope.expenseDate
       }).then(function(){
+        resetForms();
         reloadAccs();
       });
     };
@@ -43,8 +47,10 @@ var expensesControllers = angular.module('expensesControllers', [])
       Accounts.addTransaction({
         receiver_id: $scope.incomeAccId,
         amount: $scope.incomeAmount,
-        comment: $scope.incomeComment
+        comment: $scope.incomeComment,
+        time: $scope.incomeDate
       }).then(function(){
+        resetForms();
         reloadAccs();
       });
     };
@@ -54,8 +60,10 @@ var expensesControllers = angular.module('expensesControllers', [])
         sender_id: $scope.transferFromId,
         receiver_id: $scope.transferToId,
         amount: $scope.transferAmount,
-        comment: $scope.transferComment
+        comment: $scope.transferComment,
+        time: $scope.transferDate
       }).then(function(){
+        resetForms();
         reloadAccs();
       });
     };
@@ -65,6 +73,28 @@ var expensesControllers = angular.module('expensesControllers', [])
         $scope.newAccTitle = '';
         $scope.accounts = Accounts.getAccounts()
       });
+    }
+
+    function todayStr(){
+      var today = new Date();
+      return today.getFullYear() + '-'
+          + (today.getMonth() > 8 ? '' : '0') + (today.getMonth() + 1) + '-'
+          + (today.getDate() > 9 ? '' : '0') + today.getDate()
+    }
+
+    function resetForms(){
+      $scope.expenseAccId = null;
+      $scope.expenseComment = '';
+      $scope.expenseAmount = '';
+
+      $scope.incomeAccId = null;
+      $scope.incomeComment = '';
+      $scope.incomeAmount = '';
+
+      $scope.transferFromId = null;
+      $scope.transferToId = null;
+      $scope.transferComment = '';
+      $scope.transferAmount = '';
     }
   }])
 
