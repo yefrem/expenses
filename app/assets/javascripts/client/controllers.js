@@ -80,6 +80,16 @@ var expensesControllers = angular.module('expensesControllers', [])
           $state.go('user.accounts.single', {id: $stateParams.id}, {reload: true});
         }
     });
+
+    $scope.deleteTransaction = function(id){
+      if (!confirm('Are you sure?')){
+        return false;
+      }
+      Accounts.deleteTransaction(id, $stateParams.id).then(function(){
+        // TODO: should have the way to reload paginated element itself
+        $state.go('user.accounts.single', {id: $stateParams.id}, {reload: true});
+      });
+    };
   }])
 
 .controller('AccountsReportCtrl', ['$scope', '$auth', '$state', '$stateParams', 'User', 'Accounts',

@@ -94,7 +94,13 @@ angular.module('expensesServices', [])
             }
           });
         },
-
+        deleteTransaction: function(id, accountId){
+          return $http({
+            method: "DELETE",
+            url: '/users/'+User.getData().id+'/accounts/'+accountId+'/transactions/'+id+'.json',
+            headers: $auth.retrieveData('auth_headers')
+          });
+        },
         report: function(data){
           return $http({
             method: "GET",
