@@ -148,12 +148,12 @@ var expensesApp = angular.module('expensesApp',[
     });
 
     $rootScope.$on('auth:login-error', function(ev, reason) {
-      $rootScope.loginError = reason.errors.join(',');
+      $rootScope.loginError = reason.errors.join('\n');
     });
 
     $rootScope.$on('auth:registration-email-error', function(ev, reason) {
       console.log(reason);
-      $rootScope.registerError = reason.errors.full_messages.join(',');
+      $rootScope.registerError = reason.errors.full_messages.join('\n');
     });
 }])
 ;

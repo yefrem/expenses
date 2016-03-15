@@ -12,7 +12,7 @@
           <div id="login-form">
             <form ng-init="loginForm = {}" role="form" ng-submit="submitLogin(loginForm)" class="ng-pristine ng-valid-email ng-invalid ng-invalid-required">
               <fieldset ng-disabled="user.signedIn">
-                <div class="form-error" ng-if="loginError">{{loginError}}</div>
+                <div class="form-error" ng-if="loginError"><pre>{{loginError}}</pre></div>
                 <div class="form-group">
                   <label>email</label>
                   <input type="email" class="form-control ng-pristine ng-untouched ng-valid ng-valid-email" ng-model="loginForm.email" name="email">
@@ -30,7 +30,7 @@
           <div id="register-form">
             <form ng-init="registrationForm = {}" role="form" ng-submit="submitRegistration(registrationForm)" class="ng-pristine ng-invalid ng-invalid-required ng-valid-email">
               <fieldset ng-disabled="user.signedIn">
-                <div class="form-error" ng-if="registerError">{{registerError}}</div>
+                <div class="form-error" ng-if="registerError"><pre>{{registerError}}</pre></div>
                 <div class="form-group">
                   <label>email</label>
                   <input type="email" class="form-control ng-pristine ng-untouched ng-invalid ng-invalid-required ng-valid-email" required="required" ng-model="registrationForm.email" name="email">

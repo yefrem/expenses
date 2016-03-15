@@ -70,6 +70,7 @@ var expensesControllers = angular.module('expensesControllers', [])
 
 .controller('AccountsSingleCtrl', ['$scope', '$auth', '$state', '$stateParams', 'User', 'Accounts',
   function($scope, $auth, $state, $stateParams, User, Accounts) {
+    $scope.transactions = [];
     $scope.currentAcc = Accounts.getById($stateParams.id);
     $scope.page = 0;
     $scope.perPage = 10;
