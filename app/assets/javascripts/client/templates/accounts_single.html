@@ -1,12 +1,33 @@
-<div ng-if="!currentAcc">Acc not found</div>
+<div ng-if="!currentAcc">Account not found</div>
 
 <div ng-if="currentAcc">
-{{currentAcc.title}}: ${{currentAcc.balance}}
-  <h3>Transactions</h3>
+  <h3>{{currentAcc.title}}</h3>
+  <h5>Current balance: {{currentAcc.balance | currency : '$' : 2}}</h5>
+  <h4>Transactions</h4>
   <a ui-sref="user.accounts.report({id: currentAcc.id})">Generate report</a>
-  <div ng-repeat="t in transactions">
-    {{t.id}}/{{t.comment}}/{{t.amount}}
-  </div>
+  <table class="table">
+    <thead>
+      <tr>
+        <th>Date</th>
+        <th>From</th>
+        <th>To</th>
+        <th>Comment</th>
+        <th>Amount</th>
+        <th></th>
+      </tr>
+    </thead>
+    <tbody>
+    <tr class="transaction" ng-repeat="t in transactions" ng-class="{expense: t.sender.id == currentAcc.id, income: t.sender.id != currentAcc.id}">
+      <td>{{t.time}}</td>
+      <td>{{t.sender.title}}</td>
+      <td>{{t.receiver.title}}</td>
+      <td class="comment">{{t.comment}}</td>
+      <td>{{t.amount | currency : '$' : 2}}</td>
+      <td><a title="Delete transaction" ng-click="deleteTransaction(t.id)"><span class="glyphicon glyphicon-remove"></span></a></td>
+    </tr>
+    </tbody>
+  </table>
+
   <bgf-pagination
           page="page"
           per-page="perPage"

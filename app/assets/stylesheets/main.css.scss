@@ -5,3 +5,60 @@
 ._720kb-datepicker-calendar {
   width: 300px;
 }
+
+a {
+  cursor: pointer;
+}
+
+.login {
+  .nav-tabs {
+    margin-top: 20px;
+  }
+
+  h3 {
+    margin-top: 0;
+  }
+}
+
+.panel.login {
+  width: 500px;
+  margin: 0 auto;
+}
+
+.tab-pane {
+  margin-top: 3px;
+}
+
+.form-error {
+  margin: 5px 0;
+  color: darkred;
+}
+
+.form-header {
+  font-size: 16px;
+  font-weight: 600;
+  color: #444;
+}
+
+.accs-title {
+  margin-top: 0;
+  font-size: 18px;
+}
+
+ul.accounts {
+  list-style: none;
+  padding-left: 0;
+}
+
+tr.transaction.expense .comment{
+  color: darkred;
+}
+
+tr.transaction.income .comment{
+  color: darkgreen;
+}
+
+datepicker {
+  float: none;
+  margin-right: 5px;
+}

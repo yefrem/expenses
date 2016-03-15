@@ -1,59 +1,81 @@
-<div class="row">
-  <div class="col-lg-3">
-    <h1>Your Accounts</h1>
-    <form ng-valid ng-submit="createAcc()">
-      <input ng-valid ng-model="newAccTitle" placeholder="New account" />
-      <button type="submit">Create</button>
-    </form>
-    <ul>
-      <li ng-repeat="acc in accounts">
-        <a ui-sref="user.accounts.single({id: acc.id})">{{acc.title}}: ${{acc.balance}}</a><button ng-click="deleteAcc(acc.id)">Delete</button>
-      </li>
-    </ul>
+<div class="panel panel-success">
+  <div class="panel-heading">
+      <span>Hello, {{user.name}}</span>
+
+      <button class="btn btn-primary" ng-click="signOut()">Sign out</button>
   </div>
-  <div class="col-lg-9">
-    <div>
-      <form ng-valid ng-submit="addExpense()">
-        <h2>Add Expense</h2>
-        <select ng-model="expenseAccId">
-          <option value="">Select account</option>
-          <option ng-repeat="acc in accounts" value="{{acc.id}}">{{acc.title}}</option>
-        </select>
-        <input ng-model="expenseComment" placeholder="Comment"/>
-        <input ng-model="expenseAmount" placeholder="Amount" />
-        <button type="submit">Add</button>
-      </form>
-    </div>
-    <div>
-      <form ng-valid ng-submit="addIncome()">
-        <h2>Add Income</h2>
-        <select ng-model="incomeAccId">
-          <option value="">Select account</option>
-          <option ng-repeat="acc in accounts" value="{{acc.id}}">{{acc.title}}</option>
-        </select>
-        <input ng-model="incomeComment" placeholder="Comment"/>
-        <input ng-model="incomeAmount" placeholder="Amount" />
-        <button type="submit">Add</button>
-      </form>
-    </div>
-    <div>
-      <form ng-valid ng-submit="addTransfer()">
-        <h2>Add Transfer</h2>
-        <select ng-model="transferFromId">
-          <option value="">From account</option>
-          <option ng-repeat="acc in accounts" value="{{acc.id}}">{{acc.title}}</option>
-        </select>
-        <select ng-model="transferToId">
-          <option value="">To account</option>
-          <option ng-repeat="acc in accounts" value="{{acc.id}}">{{acc.title}}</option>
-        </select>
-        <input ng-model="transferComment" placeholder="Comment"/>
-        <input ng-model="transferAmount" placeholder="Amount" />
-        <button type="submit">Add</button>
-      </form>
-    </div>
-    <div ui-view>
-      Select account to see transactions
+  <div class="panel-body">
+    <div class="row">
+      <div class="col-lg-3">
+        <h1 class="accs-title">Your Accounts</h1>
+        <form ng-valid class="form-inline" ng-submit="createAcc()">
+          <input ng-valid class="form-control" ng-model="newAccTitle" placeholder="New account" />
+          <button class="btn btn-default" type="submit">Create</button>
+        </form>
+        <ul class="accounts">
+          <li ng-repeat="acc in accounts">
+            <a ui-sref="user.accounts.single({id: acc.id})">{{acc.title}}: {{acc.balance | currency : '$' : 2}}</a>
+            <button title="Delete account" class="btn btn-link" ng-click="deleteAcc(acc.id)"><span class="glyphicon glyphicon-remove"></span></button>
+          </li>
+        </ul>
+      </div>
+      <div class="col-lg-9">
+        <div class="panel panel-success">
+          <div class="panel-body">
+            <ul class="nav nav-tabs">
+              <li ng-class="{active: (selected == 'expense')}"><a ng-click="selected='expense'" role="tab">Expense</a></li>
+              <li ng-class="{active: (selected == 'income')}"><a ng-click="selected='income'" role="tab">Income</a></li>
+              <li ng-class="{active: (selected == 'transfer')}"><a ng-click="selected='transfer'" role="tab">Transfer</a></li>
+            </ul>
+
+            <div class="tab-content">
+              <div class="tab-pane" ng-class="{active: (selected == 'expense')}">
+                <form ng-valid class="form-inline" ng-submit="addExpense()">
+                  <h2 class="form-header">Add Expense</h2>
+                  <select class="form-control" ng-model="expenseAccId">
+                    <option value="">Select account</option>
+                    <option ng-repeat="acc in accounts" value="{{acc.id}}">{{acc.title}}</option>
+                  </select>
+                  <input ng-model="expenseComment" class="form-control" placeholder="Comment"/>
+                  <input ng-model="expenseAmount" class="form-control" placeholder="Amount" />
+                  <button class="btn btn-success" type="submit">Add</button>
+                </form>
+              </div>
+              <div class="tab-pane" ng-class="{active: (selected == 'income')}">
+                <form ng-valid class="form-inline" ng-submit="addIncome()">
+                  <h2 class="form-header">Add Income</h2>
+                  <select class="form-control" ng-model="incomeAccId">
+                    <option value="">Select account</option>
+                    <option ng-repeat="acc in accounts" value="{{acc.id}}">{{acc.title}}</option>
+                  </select>
+                  <input class="form-control" ng-model="incomeComment" placeholder="Comment"/>
+                  <input class="form-control" ng-model="incomeAmount" placeholder="Amount" />
+                  <button class="btn btn-success" type="submit">Add</button>
+                </form>
+              </div>
+              <div class="tab-pane" ng-class="{active: (selected == 'transfer')}">
+                <form ng-valid class="form-inline" ng-submit="addTransfer()">
+                  <h2 class="form-header">Add Transfer</h2>
+                  <select class="form-control" ng-model="transferFromId">
+                    <option value="">From account</option>
+                    <option ng-repeat="acc in accounts" value="{{acc.id}}">{{acc.title}}</option>
+                  </select>
+                  <select class="form-control" ng-model="transferToId">
+                    <option value="">To account</option>
+                    <option ng-repeat="acc in accounts" value="{{acc.id}}">{{acc.title}}</option>
+                  </select>
+                  <input class="form-control" ng-model="transferComment" placeholder="Comment"/>
+                  <input class="form-control" ng-model="transferAmount" placeholder="Amount" />
+                  <button class="btn btn-success" type="submit">Add</button>
+                </form>
+              </div>
+            </div>
+          </div>
+        </div>
+        <div ui-view>
+          Select account to see transactions
+        </div>
+      </div>
     </div>
   </div>
 </div>

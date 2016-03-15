@@ -6,14 +6,12 @@ var expensesControllers = angular.module('expensesControllers', [])
 
 .controller('HomeCtrl', ['$scope', '$location', 'User', '$state',
   function($scope, $location, User, $state) {
-    console.log(User.getData());
-    if (User.loggedIn()){
-      //$state.go('accounts');
-    }
+    $scope.selected = 'login';
   }])
 
 .controller('AccountsCtrl', ['$scope', '$http', '$auth', 'User', 'Accounts',
   function($scope, $http, $auth, User, Accounts) {
+    $scope.selected = 'expense';
     $scope.accounts = Accounts.getAccounts();
     $scope.deleteAcc = function(id){
       if (!confirm('Are you sure?')){

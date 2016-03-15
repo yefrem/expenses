@@ -24,7 +24,7 @@ var expensesApp = angular.module('expensesApp',[
 
       handleLoginResponse: function(response) {
         UserProvider.$get().setData(response.data);
-        return response;
+        return response.data;
       },
 
       handleTokenValidationResponse: function(response) {
@@ -130,6 +130,22 @@ var expensesApp = angular.module('expensesApp',[
 
     $rootScope.$on('auth:login-success', function(ev, user) {
       $state.go('user.accounts');
+    });
+
+    $rootScope.$on('auth:registration-email-success', function(ev, user) {
+      $state.go('user.accounts');
+    });
+
+    $rootScope.$on('auth:logout-success', function(ev, user) {
+      $state.go('login');
+    });
+
+    $rootScope.$on('auth:login-error', function(ev, reason) {
+      $rootScope.loginError = reason.errors.join(',');
+    });
+
+    $rootScope.$on('auth:registration-email-error', function(ev, reason) {
+      $rootScope.registerError = reason.errors.join(',');
     });
 }])
 ;
