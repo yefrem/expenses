@@ -70,14 +70,39 @@ var expensesControllers = angular.module('expensesControllers', [])
     }
   }])
 
-.controller('AccountsSingleCtrl', ['$scope', '$auth', '$stateParams', 'User', 'Accounts',
-  function($scope, $auth, $stateParams, User, Accounts) {
-    $scope.$watchCollection('accounts', function(param){
-      $scope.currentAcc = Accounts.getById($stateParams.id);
-      $scope.page = 0;
-      $scope.perPage = 10;
-      $scope.url = '/users/'+User.getData().id+'/accounts/'+$stateParams.id+'/transactions.json';
-      $scope.authHeaders = $auth.retrieveData('auth_headers');
+.controller('AccountsSingleCtrl', ['$scope', '$auth', '$state', '$stateParams', 'User', 'Accounts',
+  function($scope, $auth, $state, $stateParams, User, Accounts) {
+    $scope.currentAcc = Accounts.getById($stateParams.id);
+    $scope.page = 0;
+    $scope.perPage = 10;
+    $scope.url = '/users/'+User.getData().id+'/accounts/'+$stateParams.id+'/transactions.json';
+    $scope.authHeaders = $auth.retrieveData('auth_headers');
+    $scope.$watchCollection('accounts', function(before, after){
+        if (before != after){
+          $state.go('user.accounts.single', {id: $stateParams.id}, {reload: true});
+        }
     });
+  }])
+
+.controller('AccountsReportCtrl', ['$scope', '$auth', '$state', '$stateParams', 'User', 'Accounts',
+  function($scope, $auth, $state, $stateParams, User, Accounts) {
+    $scope.currentAcc = Accounts.getById($stateParams.id);
+    //$scope.$watchCollection('accounts', function(before, after){
+    //  if (before != after){
+    //    $state.go('user.accounts.report', {id: $stateParams.id}, {reload: true});
+    //  }
+    //});
+
+    $scope.generate = function(){
+      Accounts.report({
+        account_id: $scope.currentAcc.id,
+        user_id: User.get('id'),
+        // TODO: WHY SHOULD I DO THIS AGAIN?
+        date_from: this.dateFrom,
+        date_to: this.dateTo
+      }).then(function(response){
+        $scope.report = response.data;
+      });
+    };
   }])
 ;

@@ -6,6 +6,7 @@
     "angular-route": "latest",
     "bootstrap-sass-official": "latest",
     "angular-ui-router": "latest",
-    "angular-paginate-anything": "latest"
+    "angular-paginate-anything": "latest",
+    "angularjs-datepicker": "latest"
   }
 }

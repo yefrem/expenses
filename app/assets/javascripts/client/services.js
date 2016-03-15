@@ -93,6 +93,14 @@ angular.module('expensesServices', [])
               transaction: transactionData
             }
           });
+        },
+
+        report: function(data){
+          return $http({
+            method: "GET",
+            url: '/users/'+User.getData().id+'/accounts/'+data.account_id+'/report.json?date_from='+data.date_from+'&date_to='+data.date_to,
+            headers: $auth.retrieveData('auth_headers')
+          });
         }
       }
   }])

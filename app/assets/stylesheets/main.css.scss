@@ -1,5 +1,7 @@
 @import "bootstrap-sass-official/assets/stylesheets/bootstrap-sprockets";
 @import "bootstrap-sass-official/assets/stylesheets/bootstrap";
-body {
-  color: green;
+@import "angularjs-datepicker/src/css/angular-datepicker";
+
+._720kb-datepicker-calendar {
+  width: 300px;
 }

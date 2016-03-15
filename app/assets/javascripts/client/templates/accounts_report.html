@@ -1,0 +1,28 @@
+<div ng-if="!currentAcc">Acc not found</div>
+
+<div ng-if="currentAcc">
+  <h1>Account report: {{ currentAcc.title }}</h1>
+  <datepicker date-format="yyyy-MM-dd" >
+    <input ng-model="dateFrom" placeholder="From date" />
+  </datepicker>
+  <datepicker date-format="yyyy-MM-dd" >
+    <input ng-model="dateTo" placeholder="To date" />
+  </datepicker>
+  <button ng-disabled="!dateFrom || !dateTo" ng-click="generate()">Generate report</button>
+  <div ng-if="!report">
+    Please select dates to see stats
+  </div>
+  <div ng-if="report">
+    <div><strong>Average spent per day:</strong> {{ report.average_spending_per_day }}</div>
+    <div><strong>Total spent:</strong> {{ report.total_spent }}</div>
+    <div><strong>Total received:</strong> {{ report.total_received }}</div>
+    <div ng-if="report.transactions.length">
+      <div ng-repeat="t in report.transactions">
+        {{t.comment}}/{{t.amount}}
+      </div>
+    </div>
+    <div ng-if="!report.transactions.length">
+      Not transactions for this period
+    </div>
+  </div>
+</div>

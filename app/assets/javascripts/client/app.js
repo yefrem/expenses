@@ -5,7 +5,8 @@ var expensesApp = angular.module('expensesApp',[
   'templates',
   'expensesControllers',
   'expensesServices',
-  'bgf.paginateAnything'
+  'bgf.paginateAnything',
+  '720kb.datepicker'
 ])
 
 .config(['$authProvider', 'UserProvider',
@@ -76,6 +77,14 @@ var expensesApp = angular.module('expensesApp',[
           url: "acc/:id",
           templateUrl: "accounts_single.html",
           controller: 'AccountsSingleCtrl',
+          data: {
+            access: 'user'
+          }
+        })
+        .state('user.accounts.report', {
+          url: "acc/:id/report",
+          templateUrl: "accounts_report.html",
+          controller: 'AccountsReportCtrl',
           data: {
             access: 'user'
           }

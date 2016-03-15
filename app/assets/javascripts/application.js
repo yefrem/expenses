@@ -19,6 +19,7 @@
 //= require ng-token-auth
 //= require angular-rails-templates
 //= require angular-paginate-anything
+//= require angularjs-datepicker
 // =require_tree ./client/templates
 //= require client/app
 //= require client/controllers
